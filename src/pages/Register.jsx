@@ -1,21 +1,29 @@
 import { useState } from "react";
 import api from "../api";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await api.post("/auth/register", { name, email, password });
-      alert("Registered successfully! Please login.");
-      navigate("/login");
+
+      alert("Registration successful! Please login.");
+
+      // Reset form just in case
+      setName("");
+      setEmail("");
+      setPassword("");
+
+      // Hard navigation fixes stale form issues
+      window.location.href = "/login";
     } catch (error) {
-      alert(error.response?.data?.message || "Error registering");
+      alert(error.response?.data?.message || "Error registering user");
     }
   };
 
@@ -27,7 +35,7 @@ export default function Register() {
         <input
           placeholder="Name"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           required
         />
 
@@ -35,7 +43,7 @@ export default function Register() {
           placeholder="Email"
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -43,14 +51,15 @@ export default function Register() {
           placeholder="Password"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <button>Create Account</button>
+        <button type="submit">Register</button>
 
         <p>
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account?{" "}
+          <Link to="/login">Login</Link>
         </p>
       </form>
     </div>

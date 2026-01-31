@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import LeadDetails from "./pages/LeadDetails";
+import ContactUs from "./pages/ContactUs";
 
 const isLoggedIn = () => localStorage.getItem("token");
 
@@ -13,6 +14,8 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/lead/:id" element={<LeadDetails />} />
+      <Route path="/contact-us" element={<ContactUs />} />
+
     </Routes>
   );
 }
